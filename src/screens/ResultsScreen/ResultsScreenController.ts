@@ -105,13 +105,13 @@ export class ResultsScreenController extends ScreenController {
 		if (!response.ok) throw new Error("Unable to save leaderboard");
 	}
 
-	private async showResultsFromServer(finalScore: number): Promise<void> {
+	async showResultsFromServer(finalScore: number): Promise<void> {
 		try {
 			this.model.setFinalScore(finalScore);
 			this.view.updateFinalScore(finalScore);
 
 			// Load and update leaderboard
-			const entries = this.loadLeaderboardFromServer();
+			const entries = await this.loadLeaderboardFromServer();
 			entries.push({
 				score: finalScore,
 				timestamp: new Date().toLocaleString(),
